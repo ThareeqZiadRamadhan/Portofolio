@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import '@/app/globals.css';
 import SpotlightCursor from "@/app/components/SpotligthCursor/SpotlightCursor";
 import Navbar from "@/app/components/Navbar/Navbar";
 import Header from "@/app/components/Header/Header";
