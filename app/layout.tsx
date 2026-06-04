@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import '@/app/globals.css';
+// @ts-ignore: allow side-effect import of global css without type declarations
+import './globals.css';
 import SpotlightCursor from "@/app/components/SpotligthCursor/SpotlightCursor";
 import Navbar from "@/app/components/Navbar/Navbar";
 import Header from "@/app/components/Header/Header";
@@ -33,22 +34,20 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="en" suppressHydrationWarning>
-      <body
-        
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-slate-300 text-slate-900 dark:text-white relative min-h-screen`}
-      >
-       
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 dark:bg-black text-slate-900 dark:text-slate-50 relative min-h-screen transition-colors duration-300`}>
          <Providers>
  <ClientLayoutWrapper>
            <AOSInit />
         <div className="absolute inset-0 z-[-1]">
-        <Noise
-          patternSize={250}
-          patternScaleX={1}
-          patternScaleY={1}
-          patternRefreshInterval={2}
-          patternAlpha={15}
-        />
+            <div className="absolute inset-0 z-[-1]">
+              <Noise
+                patternSize={250}
+                patternScaleX={1}
+                patternScaleY={1}
+                patternRefreshInterval={2}
+                patternAlpha={15}
+              />
+            </div>
               </div>
 
           <SpotlightCursor />

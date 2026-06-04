@@ -2,6 +2,7 @@ export { };
 
 declare module '*.glb';
 declare module '*.png';
+declare module '*.css';
 
 declare module 'meshline' {
   export const MeshLineGeometry: any;
@@ -16,8 +17,3 @@ declare global {
     }
   }
 }
-
-- src/vite-env.d.ts
-/// <reference types="vite/client" />
-declare module '*.glb';
-declare module '*.png';

@@ -37,7 +37,6 @@ const TypeWriter = ({
   const [shouldStart, setShouldStart] = useState(!triggerOnScroll);
   const elementRef = useRef<HTMLSpanElement>(null);
 
-  // Intersection Observer untuk deteksi scroll
   useEffect(() => {
     if (!triggerOnScroll) return;
 
@@ -50,8 +49,8 @@ const TypeWriter = ({
         });
       },
       {
-        threshold: 0.3, // Trigger ketika 30% elemen terlihat
-        rootMargin: '-50px 0px', // Margin untuk trigger lebih awal/lambat
+        threshold: 0.3, 
+        rootMargin: '-50px 0px', 
       }
     );
 
@@ -66,7 +65,6 @@ const TypeWriter = ({
     };
   }, [triggerOnScroll, shouldStart]);
 
-  // Animasi typing
   useEffect(() => {
     if (!shouldStart) return;
 
@@ -82,10 +80,11 @@ const TypeWriter = ({
   }, [displayText, text, speed, onComplete, isComplete, shouldStart]);
 
   return (
-    <span ref={elementRef} className="font-semibold italic text-black "style={{textShadow: '8px 8px 12px rgba(180, 130, 40, 0.5), 0 0 12px rgba(180, 130, 40, 0.3)'}}> {/* {{filter: 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 16px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 24px rgba(255, 215, 0, 0.4))'}} */}
+    // DITAMBAHKAN: dark:text-white
+    <span ref={elementRef} className="font-semibold italic text-black dark:text-white transition-colors duration-300" style={{textShadow: '8px 8px 12px rgba(180, 130, 40, 0.5), 0 0 12px rgba(180, 130, 40, 0.3)'}}> 
       "{displayText}"
       {shouldStart && !isComplete && <span className="animate-pulse">|</span>}
-      {!shouldStart && <span className="opacity-0">{text}</span>} {/* Placeholder untuk maintain layout */}
+      {!shouldStart && <span className="opacity-0">{text}</span>} 
     </span>
   );
 };
@@ -128,11 +127,9 @@ const SocialCard = ({ children, className, sparkleCount = 8 }: { children: React
         let newTargetY = sparkle.targetY;
 
         if (!isHovered) {
-          // Mode otomatis: gerakan floating
           newTargetX = sparkle.baseX + newVelX;
           newTargetY = sparkle.baseY + newVelY;
 
-          // Bounce off edges
           if (newTargetX <= 5 || newTargetX >= 95) {
             newVelX = -newVelX;
             newTargetX = Math.max(5, Math.min(95, newTargetX));
@@ -143,7 +140,6 @@ const SocialCard = ({ children, className, sparkleCount = 8 }: { children: React
           }
         }
 
-        // Smooth movement ke target
         const easing = 0.1;
         newX += (newTargetX - sparkle.x) * easing;
         newY += (newTargetY - sparkle.y) * easing;
@@ -238,10 +234,9 @@ const SocialCard = ({ children, className, sparkleCount = 8 }: { children: React
 };
 
 const AboutPage = () => {
-  //for typetext//
   const [isTypingDone, setIsTypingDone] = useState(false);
   return (
-    <div className="min-h-screen  p-6 animate-zoom-in">
+    <div className="min-h-screen p-6 animate-zoom-in">
         <style jsx global>{`
         @keyframes fade-in-up {
           from {
@@ -298,15 +293,17 @@ const AboutPage = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mt-24 mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">About Me</h1>
-          <p className="text-gray-600">Get to know more about who I am</p>
+          {/* DITAMBAHKAN: dark:text-white dan dark:text-gray-300 */}
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">About Me</h1>
+          <p className="text-gray-600 dark:text-gray-300 transition-colors duration-300">Get to know more about who I am</p>
         </div>
 
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Left Column - Profile */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
+          {/* DITAMBAHKAN: dark:bg-slate-800 dark:border-slate-700 untuk background kotak */}
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm border border-gray-200 dark:border-slate-700 transition-colors duration-300">
             <div className="flex flex-col items-start">
               <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mb-6 flex items-center justify-center overflow-hidden">
                 <img 
@@ -315,11 +312,11 @@ const AboutPage = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-300">
                 Hi, I'm Thareeq Ziad R. 
                 <span className="animate-wave inline-block origin-bottom-left text-4xl ml-2">👋</span>
               </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed transition-colors duration-300">
                 I build cool websites and applications like this. Passionate about creating modern, 
                 performant web experiences with clean code architecture.
               </p>
@@ -329,9 +326,8 @@ const AboutPage = () => {
           {/* Right Column - Social Cards with Interactive Sparkles */}
           <div className="grid grid-cols-2 gap-4">
             
-            {/* Email Card */}
             <SocialCard 
-              className="bg-red-500 rounded-2xl p-6 flex items-center justify-center text-white hover:bg-red-600 cursor-pointer group   transition-all duration-500 ease-in-out-rotate-3 hover:rotate-3 hover:scale-110"
+              className="bg-red-500 rounded-2xl p-6 flex items-center justify-center text-white hover:bg-red-600 cursor-pointer group transition-all duration-500 ease-in-out-rotate-3 hover:rotate-3 hover:scale-110"
               sparkleCount={6}
             >
               <div className="relative z-10 text-center">
@@ -340,9 +336,8 @@ const AboutPage = () => {
               </div>
             </SocialCard>
 
-            {/* Instagram Card */}
             <SocialCard 
-              className="bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl p-6 flex items-center justify-center text-white hover:from-pink-600 hover:to-purple-700 cursor-pointer group  transition-all duration-500 ease-in-out-rotate-3 hover:-rotate-6 hover:scale-110"
+              className="bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl p-6 flex items-center justify-center text-white hover:from-pink-600 hover:to-purple-700 cursor-pointer group transition-all duration-500 ease-in-out-rotate-3 hover:-rotate-6 hover:scale-110"
               sparkleCount={8}
             >
               <div className="relative z-10 text-center">
@@ -351,7 +346,6 @@ const AboutPage = () => {
               </div>
             </SocialCard>
 
-            {/* GitHub Card */}
             <SocialCard 
               className="bg-gray-800 rounded-2xl p-6 flex items-center justify-center text-white hover:bg-gray-900 cursor-pointer group transition-all duration-500 ease-in-out-rotate-3 hover:-rotate-6 hover:scale-110"
               sparkleCount={5}
@@ -362,7 +356,6 @@ const AboutPage = () => {
               </div>
             </SocialCard>
 
-            {/* TikTok Card */}
             <SocialCard 
               className="bg-gradient-to-br from-slate-50 to-zinc-950 rounded-2xl p-6 flex items-center justify-center text-white hover:bg-blue-700 cursor-pointer group transition-all duration-500 ease-in-out-rotate-3 hover:rotate-6 hover:scale-110"
               sparkleCount={7}
@@ -376,10 +369,11 @@ const AboutPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-8 mt-8 shadow-sm border border-gray-200"
+        {/* DITAMBAHKAN: dark:bg-slate-800 dark:border-slate-700 */}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 mt-8 shadow-sm border border-gray-200 dark:border-slate-700 transition-colors duration-300"
         data-aos="fade-up"
         >
-               <p className="text-gray-600 text-left text-xl mt-6 mb-6 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 text-left text-xl mt-6 mb-6 leading-relaxed transition-colors duration-300">
             <TypeWriter
               text="For me, lines of code are a medium for storytelling."
               speed={50}
@@ -389,24 +383,25 @@ const AboutPage = () => {
           </p>
           {isTypingDone && (
             <div className="animate-fade-in">
-              <p className="text-gray-600 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
-                I am a Computer Science student fascinated by the intersection of logic and art—where functional applications meet captivating design. My journey, which began in 2023, is a quest to answer one question: <span className="font-semibold text-black">"How can technology better touch people's lives?"</span> 
+              <p className="text-gray-600 dark:text-gray-300 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up transition-colors duration-300" style={{animationDelay: '0.2s', animationFillMode: 'forwards'}}>
+                I am a Computer Science student fascinated by the intersection of logic and art—where functional applications meet captivating design. My journey, which began in 2023, is a quest to answer one question: <span className="font-semibold text-black dark:text-white">"How can technology better touch people's lives?"</span> 
               </p>
-              <p className="text-gray-700 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up" style={{animationDelay: '0.5s', animationFillMode: 'forwards'}}>
+              <p className="text-gray-700 dark:text-gray-300 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up transition-colors duration-300" style={{animationDelay: '0.5s', animationFillMode: 'forwards'}}>
                 That answer led me to dive into the world of Fullstack Development, building bridges between elegant frontends and robust backends, as well as UI/UX that leaves a lasting impression. However, my curiosity didn't stop there. I began exploring the worlds of Data Science, Data Analysis, Machine Learning, and Mobile Development. Because I believe that data is the lifeblood of every great digital product, it gives us the insights to build with empathy.
               </p>
-              <p className="text-gray-600 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up" style={{animationDelay: '0.8s', animationFillMode: 'forwards'}}>
+              <p className="text-gray-600 dark:text-gray-300 text-left text-xl mt-6 mb-6 leading-relaxed opacity-0 animate-fade-in-up transition-colors duration-300" style={{animationDelay: '0.8s', animationFillMode: 'forwards'}}>
                 In this digital space, I share artifacts from my learning journey: projects that challenge me and writings that crystallize my understanding. I believe in the power of collaboration and constructive feedback. Let's connect—I'm excited to hear your story, and maybe, we can build something extraordinary together.
               </p>
             </div>
           )}
         </div>
 
-       <div className="bg-white rounded-2xl p-8 mt-8 shadow-sm border border-gray-200"
+       {/* DITAMBAHKAN: dark:bg-slate-800 dark:border-slate-700 */}
+       <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 mt-8 shadow-sm border border-gray-200 dark:border-slate-700 transition-colors duration-300"
        data-aos="fade-left"
        >
           <div className="flex flex-col items-start">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 transition-colors duration-300">
               EXPERIENCE
             </h2>
             
@@ -429,12 +424,13 @@ const AboutPage = () => {
                         <ImageTooltip />          
                     </div>
                     
-                    <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                    {/* DITAMBAHKAN: dark:bg-slate-700 dark:text-gray-300 */}
+                    <span className="text-sm text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 px-3 py-1 rounded-full transition-colors duration-300">
                       Aug 2025 - Present
                     </span>
                   </div>
-                  <p className="text-gray-600 font-medium mb-3">IT DEVELOPER INTERN</p>
-                  <p className="text-gray-600 leading-relaxed pl-7">
+                  <p className="text-gray-600 dark:text-gray-300 font-medium mb-3 transition-colors duration-300">IT DEVELOPER INTERN</p>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed pl-7 transition-colors duration-300">
                     <li>Building a responsive website using Visual Studio 2022 with the ASP.NET framework and using SourceTree and Azure DevOps to manage Software Development Life Cycle</li>
                     <li>Creating UI/UX designs</li>
                     <li>Create API and integrate them into programs</li>
@@ -446,44 +442,47 @@ const AboutPage = () => {
             
           </div>
         </div>
+
         {/* Bottom Section - Additional Info */}
        <div className="mt-8 mb-14 grid grid-cols-1 md:grid-cols-3 gap-6 md:items-start">
   
-  {/* ===== INI PEMBUNGKUS UTAMA UNTUK KOLOM KIRI ===== */}
-  <div className="md:col-span-2 flex flex-col gap-6 w-full">
+          {/* ===== INI PEMBUNGKUS UTAMA UNTUK KOLOM KIRI ===== */}
+          <div className="md:col-span-2 flex flex-col gap-6 w-full">
 
-    {/* --- Kartu Skills (Bagian Atas) --- */}
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200"
-    data-aos="fade-up"
-    >
-      <h2 className="text-lg font-semibold text-gray-900 mb-2 text-center">
-        Tech I Enjoy Working With
-      </h2>
-      <TechStackMarquee />
-    </div>
+            {/* --- Kartu Skills (Bagian Atas) --- */}
+            {/* DITAMBAHKAN: dark:bg-slate-800 dark:border-slate-700 */}
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 transition-colors duration-300"
+            data-aos="fade-up"
+            >
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center transition-colors duration-300">
+                Tech I Enjoy Working With
+              </h2>
+              <TechStackMarquee />
+            </div>
 
-    {/* --- Kartu Proyek (Bagian Bawah) --- */}
-    <div className="w-full h-full bg-white rounded-2xl p-[55px]  shadow-sm border border-gray-200 flex flex-col items-center"
-    data-aos="fade-up"
-    >
-      <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
-        License & Certificates
-      </h3>
-      <Carousel 
-        items={DEFAULT_ITEMS}
-        autoplay={true} 
-        loop={true}
-        baseWidth={500} // Sesuaikan lebar carousel jika perlu
-      />
-    </div>
+            {/* --- Kartu Proyek (Bagian Bawah) --- */}
+            {/* DITAMBAHKAN: dark:bg-slate-800 dark:border-slate-700 */}
+            <div className="w-full h-full bg-white dark:bg-slate-800 rounded-2xl p-[55px] shadow-sm border border-gray-200 dark:border-slate-700 flex flex-col items-center transition-colors duration-300"
+            data-aos="fade-up"
+            >
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center transition-colors duration-300">
+                License & Certificates
+              </h3>
+              <Carousel 
+                items={DEFAULT_ITEMS}
+                autoplay={true} 
+                loop={true}
+                baseWidth={500} 
+              />
+            </div>
 
-  </div> {/* <-- Penutup div pembungkus kolom kiri */}
+          </div> 
 
 
-  {/* ===== KOLOM KANAN (Tidak berubah) ===== */}
-  <GlobeLocation data-aos="fade-up" data-aos-delay="200" />
-  
-</div>
+          {/* Globe Location */}
+          <GlobeLocation data-aos="fade-up" data-aos-delay="200" />
+          
+        </div>
       </div>
     </div>
   );
