@@ -4,22 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: rgba(255, 0, 0, 0.1) !important;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /*--background: #000000;*/
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-   /* background: var(--background); <-- HAPUS ATAU KOMENTARI BARIS INI */
-  font-family:"Poppins", sans-serif;
+  /* Hapus pengaturan background dan color di sini */
+  font-family: "Poppins", sans-serif;
 }
 
 @layer utilities {
@@ -27,8 +14,8 @@ body {
     text-wrap: balance;
   }
 }
-/* Ganti .sparkle-effect yang lama dengan ini di globals.css */
 
+/* Animasi Sparkle tetap aman di sini */
 @keyframes sparkle {
   0%, 100% {
     opacity: 0;
@@ -42,12 +29,8 @@ body {
 
 .sparkle-effect {
   position: absolute;
-  /* Gradien pink-ungu seperti di gambar referensi */
   background: linear-gradient(45deg, #83DDBF, #315BAF);
-  
-  /* Trik untuk membuat bentuk bintang 4 titik */
   clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
-
   animation: sparkle 2s ease-in-out infinite;
   pointer-events: none;
 }

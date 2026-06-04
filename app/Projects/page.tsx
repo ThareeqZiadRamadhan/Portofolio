@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Magnet from '../components/Magnet/Magnet';
 import ProjectModal from './ProjectModal';
 
-// ===== 1. DATA PROYEK =====
+// --- Types & Data ---
 export interface Project {
   id: number;
   title: string;
@@ -49,7 +49,7 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-   {
+  {
     id: 5,
     title: 'Website Trihita',
     description: 'A modern and responsive website for a corporate client.',
@@ -57,7 +57,7 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-   {
+  {
     id: 6 ,
     title: 'Netflix Movie Recomendation',
     description: 'A modern and responsive website for a corporate client.',
@@ -65,7 +65,7 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-   {
+  {
     id: 7 ,
     title: 'Waste Sorting System',
     description: 'A modern and responsive website for a corporate client.',
@@ -73,7 +73,7 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-   {
+  {
     id: 8 ,
     title: 'Virtul Pet Management',
     description: 'A modern and responsive website for a corporate client.',
@@ -81,7 +81,7 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-     {
+  {
     id: 9 ,
     title: 'Computer Network Topology',
     description: 'A modern and responsive website for a corporate client.',
@@ -89,20 +89,19 @@ export const projectsData: Project[] = [
     tags: ['Next.js', 'Tailwind CSS'],
     category: 'web',
   },
-  
 ];
 
-// ===== 2. KOMPONEN KARTU PROYEK =====
-// (Tidak perlu diubah)
+// --- Project Card Component ---
 interface ProjectCardProps {
   project: Project;
-  onReadMoreClick: () => void; // Tambahkan prop ini
+  onReadMoreClick: () => void;
 }
 
-  
 function ProjectCard({ project, onReadMoreClick }: ProjectCardProps) {
-    const [bgPositionClass, setBgPositionClass] = useState('-top-[150%]');
+  const [bgPositionClass, setBgPositionClass] = useState('-top-[150%]');
   const [isTransitioning, setIsTransitioning] = useState(true);
+
+  // Button hover animation handlers
   const handleMouseEnter = () => {
     setIsTransitioning(false);
     setBgPositionClass('-top-[150%]');
@@ -112,9 +111,11 @@ function ProjectCard({ project, onReadMoreClick }: ProjectCardProps) {
       setBgPositionClass('top-0');
     }, 20); 
   };
+
   const handleMouseLeave = () => {
-    setBgPositionClass('top-full'); // 'top-full' berarti 'top: 100%'
+    setBgPositionClass('top-full'); 
   };
+
   return (
     <motion.div 
       layout
@@ -122,79 +123,85 @@ function ProjectCard({ project, onReadMoreClick }: ProjectCardProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col relative h-[500px] w-[400px]" // <-- Tambahkan 'relative'
+      className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg overflow-hidden flex flex-col relative h-[500px] w-[400px] border border-transparent dark:border-slate-700 transition-colors duration-300"
     >
-      {/* LAPISAN GAMBAR (DI BELAKANG) */}
+      {/* Background Image Layer */}
       <motion.img 
         src={project.image} 
         alt={project.title} 
-        className="w-full h-64 object-cover z-0 flex-shrink-0" // <-- z-0 untuk lapisan bawah
+        className="w-full h-64 object-cover z-0 flex-shrink-0"
         whileHover={{ scale: 1.2, rotate: 5 }}
         transition={{ type: "spring", stiffness: 260, damping: 15 }}
       />
       
-      {/* LAPISAN KONTEN (DI DEPAN) */}
-      <div className="relative z-10 p-6 flex flex-col flex-grow bg-white"> 
-        <h3 className="text-xl font-bold  mb-0.9 text-gray-900">{project.title}</h3>
-         <div className="flex-1 overflow-y-auto mb-4 min-h-0">
-          <p className="text-gray-600 text-sm leading-relaxed">{project.description}</p>
+      {/* Foreground Content Layer */}
+      <div className="relative z-10 p-6 flex flex-col flex-grow bg-white dark:bg-slate-800 transition-colors duration-300"> 
+        <h3 className="text-xl font-bold mb-0.9 text-gray-900 dark:text-white transition-colors duration-300">
+          {project.title}
+        </h3>
+        
+        <div className="flex-1 overflow-y-auto mb-4 min-h-0 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed transition-colors duration-300">
+            {project.description}
+          </p>
         </div>
         
+        {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-6 flex-shrink-0">
           {project.tags.map((tag) => (
-            <span key={tag} className="bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1 rounded-full">
+            <span key={tag} className="bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 text-xs font-medium px-3 py-1 rounded-full transition-colors duration-300">
               {tag}
             </span>
           ))}
         </div>
 
-        
-        
-          <div className="flex items-center gap-4 mt-0 flex-shrink-0">
-            <button 
-              onClick={onReadMoreClick}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              className="group relative inline-flex items-center justify-center py-3 px-5 rounded-full border border-gray-300 cursor-pointer overflow-hidden bg-white"
-            >
-              <p className="relative z-10 tracking-wide whitespace-nowrap transition-colors duration-300 group-hover:text-white text-black">
-                Read More
-              </p>
-              <div 
-                 className={`absolute w-[125%] h-[150%] rounded-full ${bgPositionClass} ${isTransitioning ? 'transition-all duration-500' : ''}`}
-                 style={{ backgroundColor: 'rgb(24, 24, 27)' }}
-                ></div>
-            </button>
-          </div>
+        {/* Read More Button */}
+        <div className="flex items-center gap-4 mt-0 flex-shrink-0">
+          <button 
+            onClick={onReadMoreClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="group relative inline-flex items-center justify-center py-3 px-5 rounded-full border border-gray-300 dark:border-slate-600 cursor-pointer overflow-hidden bg-white dark:bg-slate-800 transition-colors duration-300"
+          >
+            <p className="relative z-10 tracking-wide whitespace-nowrap transition-colors duration-300 group-hover:text-white text-black dark:text-white">
+              Read More
+            </p>
+            {/* Dark background filler for hover effect */}
+            <div 
+              className={`absolute w-[125%] h-[150%] rounded-full ${bgPositionClass} ${isTransitioning ? 'transition-all duration-500' : ''}`}
+              style={{ backgroundColor: 'rgb(24, 24, 27)' }} 
+            ></div>
+          </button>
         </div>
+      </div>
     </motion.div>
   );
 }
 
-// ===== 3. KOMPONEN UTAMA HALAMAN PROYEK =====
+// --- Main Projects Page Component ---
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  
-  // State & Effect untuk menghasilkan banyak bintang secara dinamis
   const [sparkles, setSparkles] = useState<{ id: number; top: string; left: string; size: string; animationDelay: string; }[]>([]);
 
+  const filters = ['all', 'web', 'ui/ux', 'graphic'];
+
+  // Dynamic sparkles generator
   useEffect(() => {
     const generateSparkles = (count: number) => {
       return Array.from({ length: count }, (_, i) => ({
         id: i,
         top: `${Math.random() * 140 - 20}%`,
         left: `${Math.random() * 120 - 10}%`,
-        size: `${Math.random() * 10 + 5}px`, // Ukuran bintang antara 5px - 15px
+        size: `${Math.random() * 10 + 5}px`, 
         animationDelay: `${Math.random() * 2}s`
       }));
     };
-    setSparkles(generateSparkles(20)); // Hasilkan 20 bintang
+    setSparkles(generateSparkles(20));
   }, []);
 
-  const filters = ['all', 'web', 'ui/ux', 'graphic'];
-
+  // Filter handler
   useEffect(() => {
     if (activeFilter === 'all') {
       setFilteredProjects(projectsData);
@@ -207,68 +214,67 @@ export default function ProjectsPage() {
   }, [activeFilter]);
 
   return (
-  <section className="w-full max-w-7xl mx-auto px-[20px] py-[90px]">
-
-    {/* ===== PEMBUNGKUS BARU UNTUK JUDUL & FILTER ===== */}
-    <div className="flex flex-col items-center">
-
-      {/* --- BLOK JUDUL DENGAN BINTANG DINAMIS --- */}
-      <div className="relative inline-block text-center mb-12">
-        {sparkles.map((sparkle) => (
-          <span
-            key={sparkle.id}
-            className="sparkle-effect"
-            style={{
-              top: sparkle.top,
-              left: sparkle.left,
-              width: sparkle.size,
-              height: sparkle.size,
-              animationDelay: sparkle.animationDelay,
-            }}
-          />
-        ))}
-        <h2 className="text-4xl font-bold text-gray-900 relative z-10">
-          MY PROJECTS
-        </h2>
-      </div>
+    <section className="w-full max-w-7xl mx-auto px-[20px] py-[90px]">
       
-      {/* --- Tombol Filter --- */}
-      <div className="flex justify-center items-center gap-4 mb-12">
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            className={`px-6 py-2 text-sm font-semibold rounded-full transition-colors duration-300
-              ${activeFilter === filter
-                ? 'bg-blue-700 text-white shadow-md'
-                : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-          >
-            {filter.toUpperCase()}
-          </button>
-        ))}
+      {/* Header Section */}
+      <div className="flex flex-col items-center">
+        {/* Title with dynamic sparkles */}
+        <div className="relative inline-block text-center mb-12">
+          {sparkles.map((sparkle) => (
+            <span
+              key={sparkle.id}
+              className="sparkle-effect opacity-80 dark:opacity-100 transition-opacity duration-300"
+              style={{
+                top: sparkle.top,
+                left: sparkle.left,
+                width: sparkle.size,
+                height: sparkle.size,
+                animationDelay: sparkle.animationDelay,
+              }}
+            />
+          ))}
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white relative z-10 transition-colors duration-300">
+            MY PROJECTS
+          </h2>
+        </div>
+        
+        {/* Filter Navigation */}
+        <div className="flex justify-center items-center gap-4 mb-12">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-6 py-2 text-sm font-semibold rounded-full transition-colors duration-300
+                ${activeFilter === filter
+                  ? 'bg-blue-700 text-white shadow-md'
+                  : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 border border-transparent dark:border-slate-700'
+                }`}
+            >
+              {filter.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </div>
 
-    </div>
-
-      {/* Grid Proyek dengan Animasi */}
-      
+      {/* Projects Grid */}
       <motion.div 
         layout
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
       >
         <AnimatePresence>
-        {filteredProjects.map((project) => (
-          <Magnet key={project.id} magnetStrength={25}>
-          <ProjectCard 
-              project={project} 
-              onReadMoreClick={() => setSelectedProject(project)} 
-            />
-          </Magnet>
-        ))}
+          {filteredProjects.map((project) => (
+            <Magnet key={project.id} magnetStrength={25}>
+              <ProjectCard 
+                project={project} 
+                onReadMoreClick={() => setSelectedProject(project)} 
+              />
+            </Magnet>
+          ))}
         </AnimatePresence>
       </motion.div>
-       <ProjectModal 
+
+      {/* Project Detail Modal */}
+      <ProjectModal 
         project={selectedProject} 
         onClose={() => setSelectedProject(null)} 
       />
